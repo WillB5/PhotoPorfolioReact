@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import "../pages/portfolio.css";
-
+import "./portfolio.css";
 import img1 from "../assets/img1.jpg";
 import img2 from "../assets/img2.jpg";
 import img3 from "../assets/img3.jpg";
@@ -35,7 +34,6 @@ export default function Portfolio() {
   const [filter, setFilter] = useState("all");
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [columns, setColumns] = useState(3);
-  const [loadedImages, setLoadedImages] = useState({}); // object-based tracking ✅
 
   const photos = [
     { title: "Henry Vilas Zoo - Capybara", image: img1, tag: "nature" },
@@ -106,7 +104,6 @@ export default function Portfolio() {
       else if (window.innerWidth < 992) setColumns(2);
       else setColumns(3);
     };
-
     updateColumns();
     window.addEventListener("resize", updateColumns);
     return () => window.removeEventListener("resize", updateColumns);
@@ -114,7 +111,6 @@ export default function Portfolio() {
 
   useEffect(() => {
     if (selectedIndex === null) return;
-
     const handleKeyDown = (e) => {
       if (e.key === "Escape") setSelectedIndex(null);
       else if (e.key === "ArrowRight")
@@ -124,7 +120,6 @@ export default function Portfolio() {
           (prev) => (prev - 1 + filteredPhotos.length) % filteredPhotos.length
         );
     };
-
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedIndex, filteredPhotos]);
@@ -153,40 +148,18 @@ export default function Portfolio() {
       </div>
 
       {/* Masonry Grid */}
-      <div
-        className="portfolio-grid"
-        style={{
-          columnCount: columns,
-          columnGap: "10px",
-        }}
-      >
+      <div className="portfolio-grid" style={{ columnCount: columns }}>
         {filteredPhotos.map((item, index) => (
           <div
-            key={item.title}
-            style={{
-              breakInside: "avoid",
-              marginBottom: "10px",
-              cursor: "pointer",
-            }}
+            key={index}
+            className="portfolio-item"
             onClick={() => setSelectedIndex(index)}
           >
             <img
               src={item.image}
               alt={item.title}
               loading="lazy"
-              className={`fade-in ${loadedImages[item.title] ? "loaded" : ""}`}
-              onLoad={() =>
-                setLoadedImages((prev) => ({
-                  ...prev,
-                  [item.title]: true,
-                }))
-              }
-              style={{
-                width: "100%",
-                height: "auto",
-                display: "block",
-                borderRadius: "8px",
-              }}
+              onLoad={(e) => e.currentTarget.classList.add("loaded")}
             />
           </div>
         ))}
@@ -219,12 +192,8 @@ export default function Portfolio() {
                 <img
                   src={filteredPhotos[selectedIndex].image}
                   alt={filteredPhotos[selectedIndex].title}
-                  className="img-fluid rounded shadow fade-in loaded"
-                  style={{
-                    maxHeight: "80vh",
-                    width: "auto",
-                    height: "auto",
-                  }}
+                  className="img-fluid rounded shadow loaded"
+                  style={{ maxHeight: "80vh", width: "auto", height: "auto" }}
                 />
               </div>
 

@@ -1,10 +1,31 @@
-.fade-in {
-  opacity: 0;
+.portfolio-grid {
+  column-gap: 10px;
+}
+
+.portfolio-item {
+  break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.portfolio-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  opacity: 0; /* start invisible */
   transform: scale(0.98);
   transition: opacity 0.5s ease, transform 0.4s ease;
 }
 
-.fade-in.loaded {
+.portfolio-item img.loaded {
   opacity: 1;
   transform: scale(1);
+}
+
+.portfolio-item img:hover {
+  transform: scale(1.02);
+  opacity: 0.9;
 }

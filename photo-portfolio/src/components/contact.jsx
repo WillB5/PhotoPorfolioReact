@@ -1,25 +1,26 @@
 import flickrIcon from "../assets/flickr.svg";
 
-function ContactInfo() {
+export default function ContactInfo() {
   return (
-    <footer className="text-center m-5">
-      <p className="lead">
-        willphotographyonline@gmail.com •
-        <a href="https://flickr.com/people/194428356@N07/">
+    <footer className="contact-footer m-5">
+      <div className="d-flex justify-content-center align-items-center gap-2">
+        <span className="lead">willphotographyonline@gmail.com</span>
+        <a
+          href="https://flickr.com/people/194428356@N07/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <img
             alt="Flickr"
             src={flickrIcon}
             style={{
               height: "1em",
               width: "auto",
-              marginLeft: "0.25em",
               filter: "invert(1)",
             }}
           />
         </a>
-      </p>
+      </div>
     </footer>
   );
 }
-
-export default ContactInfo;
