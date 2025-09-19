@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import "../pages/portfolio.css";
+
 import img1 from "../assets/img1.jpg";
 import img2 from "../assets/img2.jpg";
 import img3 from "../assets/img3.jpg";
@@ -33,6 +35,7 @@ export default function Portfolio() {
   const [filter, setFilter] = useState("all");
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [columns, setColumns] = useState(3);
+  const [loadedImages, setLoadedImages] = useState({}); // object-based tracking ✅
 
   const photos = [
     { title: "Henry Vilas Zoo - Capybara", image: img1, tag: "nature" },
@@ -97,12 +100,11 @@ export default function Portfolio() {
     events: "Events",
   };
 
-  // Dynamically adjust column count based on screen width
   useEffect(() => {
     const updateColumns = () => {
       if (window.innerWidth < 576) setColumns(1);
       else if (window.innerWidth < 992) setColumns(2);
-      else setColumns(3); // Desktop
+      else setColumns(3);
     };
 
     updateColumns();
@@ -110,7 +112,6 @@ export default function Portfolio() {
     return () => window.removeEventListener("resize", updateColumns);
   }, []);
 
-  // Keyboard navigation
   useEffect(() => {
     if (selectedIndex === null) return;
 
@@ -161,7 +162,7 @@ export default function Portfolio() {
       >
         {filteredPhotos.map((item, index) => (
           <div
-            key={index}
+            key={item.title}
             style={{
               breakInside: "avoid",
               marginBottom: "10px",
@@ -173,6 +174,13 @@ export default function Portfolio() {
               src={item.image}
               alt={item.title}
               loading="lazy"
+              className={`fade-in ${loadedImages[item.title] ? "loaded" : ""}`}
+              onLoad={() =>
+                setLoadedImages((prev) => ({
+                  ...prev,
+                  [item.title]: true,
+                }))
+              }
               style={{
                 width: "100%",
                 height: "auto",
@@ -211,7 +219,7 @@ export default function Portfolio() {
                 <img
                   src={filteredPhotos[selectedIndex].image}
                   alt={filteredPhotos[selectedIndex].title}
-                  className="img-fluid rounded shadow"
+                  className="img-fluid rounded shadow fade-in loaded"
                   style={{
                     maxHeight: "80vh",
                     width: "auto",
