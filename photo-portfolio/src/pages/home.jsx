@@ -11,7 +11,7 @@ import Macaw from "../assets/img22.jpg";
 export default function Home() {
   return (
     <div className="container">
-      <h1 className="display-3">About Me</h1>
+      <h1 className="display-3 m-2">About Me</h1>
       <p className="lead fs-3 text-start">
         I have been a photographer since 2015. My main focus is portrait
         photography but I also branch out into street and nature photography.
