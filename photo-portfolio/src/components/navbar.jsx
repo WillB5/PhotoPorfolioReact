@@ -52,7 +52,7 @@ export default function Navbar() {
                   isActive ? "nav-link active" : "nav-link"
                 }
               >
-                Porfolio
+                Portfolio
               </NavLink>
             </li>
           </ul>
